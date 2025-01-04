@@ -82,8 +82,8 @@
     }
     .grid{
       display: grid;
-      grid-template-columns: 2vw 82% 16%;
-      grid-template-rows: auto;
+      grid-template-columns: 2vw 82vw 16vw;
+      grid-template-rows:max-content;
     }
     .closebtn{
       margin:0;
@@ -171,19 +171,6 @@
       color: rgb(217, 216, 216);
       background-color: rgb(51, 49, 49);
     }
-    .layertitle{
-      display: flex;
-      font-size: 13px;
-      justify-content: space-between;
-      width: 5vw;
-      overflow: hidden;
-      border-top-right-radius: 4px;
-      align-items: center;
-      margin-right: 3px;
-      margin-top:5px;
-      color: rgb(217, 216, 216);
-      background-color: rgb(78, 75, 75);
-    }
     .titleborder{
       border: 2px solid  rgba(172, 171, 171, 0.518);
       background-color: rgb(78, 75, 75);
@@ -201,7 +188,12 @@
       cursor: pointer;
       margin-top: 2px;
       border-top-right-radius: 5px;
-
+    }
+    .tlsimg{
+      margin-top:0.3vw;
+      height:1.4vw;
+      width:1.4vw;
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
     }
     .tls1:hover{
       background-color: rgb(53, 53, 53);
@@ -212,21 +204,23 @@
     .activelayer{
       background-color: rgb(114, 114, 114);
     }
+    .layertab{
+      display: flex;
+      font-size: 13px;
+      justify-content: space-between;
+      width: 5vw;
+      overflow: hidden;
+      border-top-right-radius: 4px;
+      align-items: center;
+      margin-right: 3px;
+      margin-top:5px;
+      color: rgb(217, 216, 216);
+    }
     .layerbox{
       display: flex;
+      height: 41.8vh;
       flex-direction: column;
-      align-content: space-evenly;
-      justify-content: center;
-      align-items: center;
-      overflow:auto;
-    }
-    .layer{
-      color:white;
-      border-bottom: 2px solid rgb(60, 60, 60);
-      align-self:center;
-      cursor: pointer;
-      height:40px;
-      width: 100%;
+      overflow:scroll;
     }
     .layeroptions{
       position: absolute;
@@ -235,15 +229,45 @@
       width: 16%;
       height: 3vh;
       display: flex;
+      justify-content: flex-end;
       border-top: 2px solid rgb(60, 60, 60);
       z-index: 3000;
     }
     .layeroptionbtn{
       cursor: pointer;
-      background-color: rgb(78, 75, 75);
       align-self: flex-end;
-      height: 3vh;
-      width: 25px;
+      margin-right: 0.2vw;
+      height: 2.5vh;
+      width: 2.5vh;
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+    }
+    .layer{
+      display: flex;
+      align-items: center;
+      color:white;
+      border-bottom: 2px solid rgb(60, 60, 60);
+      align-self:center;
+      cursor: pointer;
+      height:5vh;
+      width: 100%;
+    }
+    .layereye{
+      margin-top:0.4vw;
+      margin-left:0.2vw;
+      height:1vw;
+      width:1vw;
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+    }
+    .layerpreview{
+      margin-top:0.3vw;
+      margin-left:0.2vw;
+      height:4vh;
+      width:3vw;
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+    }
+    .layername{
+      width:10vw;
+      margin-left:0.2vw
     }
 </style>
 </head>
@@ -325,9 +349,14 @@
   <div id="tooloptions" class="background tooloptions bringfront" onmousedown="hidemenu()"></div>
   <div class="grid" onmousedown="hidemenu()">
     <div id="tools" class="tls background bringfront flexstyle">
-      <div id="tmove" class="tls1" onclick="activatetool('tmove')">M</div>
-      <div id="tshape" class="tls1" onclick="activatetool('tshape')">[]</div>
-      <div id="ttext" class="tls1" onclick="activatetool('ttext')">T</div>
+      <div id="tmove" class="tls1" onclick="activatetool('tmove')"><img src="./public/img/move.svg" class="tlsimg"></div>
+      <div id="tcrop" class="tls1" onclick="activatetool('tcrop')"><img src="./public/img/crop-outline.svg" class="tlsimg"></div>
+      <div id="tdrop" class="tls1" onclick="activatetool('tdrop')"><img src="./public/img/eyedrop-outline.svg" class="tlsimg"></div>
+      <div id="tbrush" class="tls1" onclick="activatetool('tbrush')"><img src="./public/img/brush-outline.svg" class="tlsimg"></div>
+      <div id="terase" class="tls1" onclick="activatetool('terase')"><img src="./public/img/document-outline.svg" class="tlsimg"></div>
+      <div id="tbucket" class="tls1" onclick="activatetool('tbucket')"><img src="./public/img/color-fill-outline.svg" class="tlsimg"></div>
+      <div id="tshape" class="tls1" onclick="activatetool('tshape')"><img src="./public/img/stop-outline.svg" class="tlsimg"></div>
+      <div id="ttext" class="tls1" onclick="activatetool('ttext')"><img src="./public/img/text.svg" class="tlsimg"></div>
       <div style="height: 2vw;width:2vw;position: relative;margin-top:5px;">
         <input id="forecolor" type="color" value="#ffffff" hidden onchange="setcolor()"><div id="colorf" style="background-color:#ffffff;height:1vw;width: 1vw;position: absolute;border: 2px solid white;z-index:2;cursor:pointer;" onclick="opencolorbox1()"></div>
         <input id="backcolor" type="color" value="#000000" hidden onchange="setcolor()"><div id="colorb" style="background-color:#000000;height:1vw;top:0.5vw;left:0.5vw;width: 1vw;position: absolute;border: 2px solid white;z-index: 1;cursor:pointer;" onclick="opencolorbox2()"></div>
@@ -342,34 +371,60 @@
 
       </div>
     </div>
-    <div style="display: grid;grid-template-rows: 40vh auto;">
+    <div style="display: grid;grid-template-rows: 40vh 50vh;">
       <div class="background bringfront"><Button id="btnsubmit" class="button btn btn-primary" type="button" title="Submit">Button1</Button>
            <Button id="btnsubmit" class="button btn btn-primary" type="button" title="Submit">Button1</Button>
       </div>
-      <div id="layerbox" class="background bringfront">
+      <div class="background bringfront">
         <div class="projecttitle bringfront">
-          <div class="layertitle">&nbsp;Layers</div>
+          <div class="layertab background">&nbsp;Layers</div>
         </div>
-        <div style="border-bottom: 2px solid rgb(44, 43, 43);height: 35px;">&nbsp;Layers</div>
-        <div id="layerbox0" class="layerbox">
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+        <div style="border-bottom: 2px solid rgb(44, 43, 43);height: 4vh;">&nbsp;Layers</div>
+        <div id="layerbox">
+          <div id="layerbox0" class="layerbox">
+            <div id="layer01" class="layer">
+              <div><img id="eye01" src="./public/img/eye.svg" onclick="hidelayer('01')" class="layereye"></div>
+              <div><img id="preview01" src="" class="layerpreview"></div>
+              <div id="name01" class="layername" onclick="selectlayer('01')">Layers 1</div>
+            </div>
+            <div id="layer02" class="layer">
+              <div><img id="eye02" src="./public/img/eye.svg" onclick="hidelayer('02')" class="layereye"></div>
+              <div><img id="preview02" src="" class="layerpreview"></div>
+              <div id="name01" class="layername" onclick="selectlayer('02')">Layers 1</div>
+            </div>
+            <div id="layer03" class="layer">
+              <div><img id="eye03" src="./public/img/eye-off-sharp.svg" onclick="hidelayer('03')" class="layereye"></div>
+              <div><img id="preview03" src="" class="layerpreview"></div>
+              <div id="name03" class="layername" onclick="selectlayer('03')">Layers 1</div>
+            </div>
+            <div id="layer03" class="layer">
+              <div><img id="eye03" src="./public/img/eye-off-sharp.svg" onclick="hidelayer('03')" class="layereye"></div>
+              <div><img id="preview03" src="" class="layerpreview"></div>
+              <div id="name03" class="layername" onclick="selectlayer('03')">Layers 1</div>
+            </div>
+            <div id="layer03" class="layer">
+              <div><img id="eye03" src="./public/img/eye-off-sharp.svg" onclick="hidelayer('03')" class="layereye"></div>
+              <div><img id="preview03" src="" class="layerpreview"></div>
+              <div id="name03" class="layername" onclick="selectlayer('03')">Layers 1</div>
+            </div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
+          </div>
         </div>
-      </div>
-      <div class="layeroptions">
-        <div class="layeroptionbtn">sdf</div>
-        <div class="layeroptionbtn">sdf</div>
-        <div class="layeroptionbtn">sdf</div>
       </div>
     </div>
+
+    <div class="layeroptions background">
+      <div class="layeroptionbtn"><img src="./public/img/document-outline.svg" onclick="createlayer()"></div>
+      <div class="layeroptionbtn"><img src="./public/img/trash-outline.svg" onclick="deletelayer()"></div>
+    </div>
+
   </div>
   <script src="index.js"></script>
   <script src="saveas.js"></script>

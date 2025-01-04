@@ -252,19 +252,17 @@ function defaultcolor(){
 }
 function activatetool(name){
     currenttool=name;
-    if(name==="tmove"){
-        document.getElementById("tshape").classList.remove("activetool");
-        document.getElementById("ttext").classList.remove("activetool");
-        document.getElementById("tmove").classList.add("activetool");
-    }else if(name==="tshape"){
-        document.getElementById("tmove").classList.remove("activetool");
-        document.getElementById("ttext").classList.remove("activetool");
-        document.getElementById("tshape").classList.add("activetool");
-    }else if(name==="ttext"){
-        document.getElementById("tshape").classList.remove("activetool");
-        document.getElementById("tmove").classList.remove("activetool");
-        document.getElementById("ttext").classList.add("activetool");
-    }
+
+    document.getElementById("tmove").classList.remove("activetool");
+    document.getElementById("tbrush").classList.remove("activetool");
+    document.getElementById("tshape").classList.remove("activetool");
+    document.getElementById("ttext").classList.remove("activetool");
+    document.getElementById("tcrop").classList.remove("activetool");
+    document.getElementById("tdrop").classList.remove("activetool");
+    document.getElementById("terase").classList.remove("activetool");
+    document.getElementById("tbucket").classList.remove("activetool");
+
+    document.getElementById(name).classList.add("activetool");
 }
 function selectlayer(layer){
     if(isctrldown){
@@ -272,4 +270,11 @@ function selectlayer(layer){
             document.getElementById("layer"+layer).classList.remove("activelayer");
         }else document.getElementById("layer"+layer).classList.add("activelayer");
     }else document.getElementById("layer"+layer).classList.add("activelayer");
+}
+function hidelayer(layer){
+    if(document.getElementById("eye"+layer).src.toString().includes("eye.svg")){
+        document.getElementById("eye"+layer).src="./public/img/eye-off-sharp.svg";
+    }else {
+        document.getElementById("eye"+layer).src="./public/img/eye.svg";
+    }
 }
