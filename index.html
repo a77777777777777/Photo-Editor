@@ -3,351 +3,142 @@
 <head>
 <title>Image EDitor
 </title>
-<style>
-    html{
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-    @media (min-width: 601px) {
-      .dialogbox{
-        overflow: hidden;
-      }
-    }
-    @media (max-width: 600px) {
-      .dialogbox{
-        overflow: scroll;
-      }
-    }
-    body{
-        background-color: #131314e9;
-        margin:0;
-        overflow: hidden;
-        height: 100vh;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    p{
-      margin:0;
-    }
-    a{
-      cursor:pointer;
-      color:white;
-      text-decoration: none;
-    }
-    a:hover {
-    color:#c2c2c2f9;
-    text-decoration: none;
-    }
-    .background{
-      background-color: rgb(78, 75, 75);
-    }
-    .background-dark{
-      background-color: rgb(23, 23, 23);
-    }
-    .menu{
-      display: flex;
-      position: relative;
-      z-index: 2999;
-      align-items: center;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.333);
-    }
-    .tooloptions{
-      width: 100%;
-      height: 4vh;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.333);
-    }
-    .menuitems{
-      padding-right: 35px;
-      position: relative;
-    }
-    .menuitems-content{
-      display: flex;
-      z-index: 3000;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      flex-direction: column;
-      width: 160px;
-      position: absolute;
-      border: 1px solid rgba(172, 171, 171, 0.518);
-    }
-    .contentlist{
-      padding:8px 8px 8px 20px;
-    }
-    .contentlist:hover{
-      background-color: rgba(235, 235, 235, 0.888);
-      color: rgba(15, 14, 14, 0.892);
-    }
-    .hide{ 
-      display: none;
-    }
-    .grid{
-      display: grid;
-      grid-template-columns: 2vw 82vw 16vw;
-      grid-template-rows:max-content;
-    }
-    .closebtn{
-      margin:0;
-      padding-right: 10px;
-    }
-    .dialogtitle{
-      display: flex;
-      font-size: 14px;
-      justify-content: space-between; 
-      height: 17px;
-    }
-    .dialogboxbg{
-      z-index: 3001;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-    .dialogbox{
-      position:absolute;
-      background-color: rgb(68, 66, 66);
-      color: rgb(217, 216, 216);
-      font-size: 12px;
-      border: 1px solid  rgba(172, 171, 171, 0.518);
-    }
-    .controls{
-      background-color: rgb(34, 34, 34);
-      color: rgb(217, 216, 216);
-      border: 1px solid  rgba(172, 171, 171, 0.518);
-      transition-duration: 0.4s;
-    }
-    .controls:hover{
-      border: 1px solid rgb(52, 52, 249);
-    }
-    input{
-      outline: none;
-      font-size: 14px;
-    }
-    input:focus{
-      border: 1px solid rgb(52, 52, 249);
-    }
-    .flexstyle{
-      display: flex;
-    }
-    .margintb{
-      margin-top:8px;margin-bottom:5px
-    }
-    .marginlr{
-      margin-left:5px;margin-right:5px
-    }
-    .document1{
-      position: relative;
-      background-image: url('checker.png');
-      background-repeat: repeat;
-      box-shadow: 0px 0px 50px black;
-      z-index: 1;
-    }
-    .canvass{
-      position: absolute;
-      border:2px solid blue;
-    }
-    .bringfront{
-      z-index: 2998;
-      position: relative;
-    }
-    .projecttitle{
-      display: flex;
-      text-overflow: clip;
-      gap:2px;
-      background-color: #131314e9;
-      width:100%;
-      height:25px;
-    }
-    .documenttitle{
-      display: flex;
-      font-size: 13px;
-      justify-content: space-between;
-      width: 10vw;
-      align-items: center;
-      margin-top: 3px;
-      margin-bottom: 3px;
-      cursor: pointer;
-      margin-left: 3px;
-      border-radius: 4px;
-      color: rgb(217, 216, 216);
-      background-color: rgb(51, 49, 49);
-    }
-    .titleborder{
-      border: 2px solid  rgba(172, 171, 171, 0.518);
-      background-color: rgb(78, 75, 75);
-      color: white;
-    }
-    .tls{
-      flex-direction: column;
-    }
-    .tls1{
-      width: 2vw;
-      height: 2vw;
-      position: relative;
-      text-align: center;
-      color:white;
-      cursor: pointer;
-      margin-top: 2px;
-      border-top-right-radius: 5px;
-    }
-    .tlsimg{
-      margin-top:0.3vw;
-      height:1.4vw;
-      width:1.4vw;
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
-    }
-    .tls1:hover{
-      background-color: rgb(53, 53, 53);
-    }
-    .activetool{
-      background-color: rgb(53, 53, 53);
-    }
-    .activelayer{
-      background-color: rgb(114, 114, 114);
-    }
-    .layertab{
-      display: flex;
-      font-size: 13px;
-      justify-content: space-between;
-      width: 5vw;
-      overflow: hidden;
-      border-top-right-radius: 4px;
-      align-items: center;
-      margin-right: 3px;
-      margin-top:5px;
-      color: rgb(217, 216, 216);
-    }
-    .layerbox{
-      display: flex;
-      height: 41.8vh;
-      flex-direction: column;
-      overflow:scroll;
-    }
-    .layeroptions{
-      position: absolute;
-      bottom:0px;
-      right: 0px;
-      width: 16%;
-      height: 3vh;
-      display: flex;
-      justify-content: flex-end;
-      border-top: 2px solid rgb(60, 60, 60);
-      z-index: 3000;
-    }
-    .layeroptionbtn{
-      cursor: pointer;
-      align-self: flex-end;
-      margin-right: 0.2vw;
-      height: 2.5vh;
-      width: 2.5vh;
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
-    }
-    .layer{
-      display: flex;
-      align-items: center;
-      color:white;
-      border-bottom: 2px solid rgb(60, 60, 60);
-      align-self:center;
-      cursor: pointer;
-      height:5vh;
-      width: 100%;
-    }
-    .layereye{
-      margin-top:0.4vw;
-      margin-left:0.2vw;
-      height:1vw;
-      width:1vw;
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
-    }
-    .layerpreview{
-      margin-top:0.3vw;
-      margin-left:0.2vw;
-      height:4vh;
-      width:3vw;
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
-    }
-    .layername{
-      width:10vw;
-      margin-left:0.2vw
-    }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="new" class="dialogboxbg hide background" onmousemove="mousemove(event,'newdialog')">
-    <div id="newdialog" class="dialogbox" style="width:50vw; height:50%;top:15%;left:15%;">
-      <div class="dialogtitle background-dark" onmousedown="mousedown(event)" onmouseup="mouseup()"><div>&nbsp;New Project</div><div class="closebtn"><a onclick="hidedialog('new')">X</a></div></div>
-      <div style="display: grid; grid-template-columns: 65% 35%;">
-        <div></div>
-          <div>
-            <p class="margintb">Document Name:</p>
-            <div><input id="documentname" class="controls" type="text" value="New Project" style="width: 10vw;"></div>
+  <img id="cursor" src="" class="cursorimg hide">
+<canvas id="tmpcanvas" class="hide"></canvas>
+<div id="new" class="dialogboxbg hide background" onmousemove="mousemove(event,'newdialog')">
+  <div id="newdialog" class="dialogbox" style="width:40vw; height:35%;top:15%;left:15%;">
+    <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;New Project</div><div class="closebtn"><a onclick="hidedialog('new')">X</a></div></div>
+    <div style="display: grid; grid-template-columns: 50% 50%;">
+      <div></div>
+        <div>
+          <p class="margintb">Document Name:</p>
+          <div><input id="documentname" class="controls" type="text" value="New Project" style="width: 10vw;"></div>
+          <div class="flexstyle">
+            <div><p class="margintb">Width:</p><input id="newwidth" onchange="validatenumber('newwidth')" class="controls" type="number" value="1920" style="width: 4vw;"></div>
+            <div><p class="margintb">&nbsp;</p><button class="controls marginlr" onclick="swapheightwidth()">⇆</button></div>
+            <div><p class="margintb">Height:</p><input id="newheight" onchange="validatenumber('newheight')" class="controls" type="number" value="1080" style="width: 4vw;"></div>
+            <div><p class="margintb">&nbsp;</p><select id="newtype" class="controls marginlr" value="Pixels" style="width: 6vw;">
+              <option value="pixels">Pixels</option>
+              <option value="percent">Percent</option>
+              <option value="centimeters">Centimeters</option>
+              <option value="millimeters">Millimeters</option>
+              <option value="inches">Inches</option></select>
+            </div>
+          </div>
             <div class="flexstyle">
-              <div><p class="margintb">Width:</p><input id="newwidth" onchange="validatenumber('newwidth')" class="controls" type="number" value="1920" style="width: 4vw;"></div>
-              <div><p class="margintb">&nbsp;</p><button class="controls marginlr" onclick="swapheightwidth()">⇆</button></div>
-              <div><p class="margintb">Height:</p><input id="newheight" onchange="validatenumber('newheight')" class="controls" type="number" value="1080" style="width: 4vw;"></div>
-              <div><p class="margintb">&nbsp;</p><select id="newtype" class="controls marginlr" value="Pixels" style="width: 6vw;">
-                <option value="pixels">Pixels</option>
-                <option value="percent">Percent</option>
-                <option value="centimeters">Centimeters</option>
-                <option value="millimeters">Millimeters</option>
-                <option value="inches">Inches</option></select>
+              <div><p class="margintb">DPI:</p><input id="newdpi" onchange="validatenumber('newdpi')" class="controls" type="number" value="72" style="width: 4vw;"></div>
+              <div><p class="margintb">&nbsp;</p><select id="newdpitype" class="controls marginlr" value="Pixels / In" style="width: 5vw;">
+                <option value="pixelsin">Pixels / In</option>
+                <option value="pixelscm">Pixels / Cm</option></select>
               </div>
             </div>
-              <div class="flexstyle">
-                <div><p class="margintb">DPI:</p><input id="newdpi" onchange="validatenumber('newdpi')" class="controls" type="number" value="72" style="width: 4vw;"></div>
-                <div><p class="margintb">&nbsp;</p><select id="newdpitype" class="controls marginlr" value="Pixels / In" style="width: 5vw;">
-                  <option value="pixelsin">Pixels / In</option>
-                  <option value="pixelscm">Pixels / Cm</option></select>
-                </div>
+            <div class="flexstyle">
+              <div><p class="margintb">Background</p><select id="newdbackground" class="controls" value="White" style="width: 7vw;">
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="transparent">Transparent</option>
+                <option value="custom">Custom</option></select>
               </div>
-              <div class="flexstyle">
-                <div><p class="margintb">Background</p><select id="newdbackground" class="controls" value="White" style="width: 7vw;">
-                  <option value="white">White</option>
-                  <option value="black">Black</option>
-                  <option value="transparent">Transparent</option>
-                  <option value="custom">Custom</option></select>
-                </div>
-                <div><p class="margintb">&nbsp;</p><input id="newdcolor" class="controls marginlr" type="color" value="#ffffff" style="height:18.5px;width: 3vw;"></div>
-              </div>
-              <div class="flexstyle">
-                <button class="controls margintb" style="width: 85%;" onclick="createdocument()">Create</button>
-              </div>
-          </div>
-        </div>
-    </div>
-  </div>
-
-  <div id="closingdocument" class="dialogboxbg hide background" onmousemove="mousemove(event,'confirmclosing')">
-    <div id="confirmclosing" class="dialogbox" style="width:28vw; height:20%;top:40%;left:36%;">
-      <div class="dialogtitle background-dark" onmousedown="mousedown(event)" onmouseup="mouseup()"><div>&nbsp;File not saved!</div><div class="closebtn"><a onclick="hidedialog('closingdocument')">X</a></div></div>
-          <div>
-            <p class="margintb" style="padding-left: 20px;padding-top: 5px;">Close the file without saving?</p>
-            <div class="flexstyle" style="justify-content: center;">
-              <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="saveandclose('specifydocument')">Save</button>
-              <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="closedocument()">Don't Save</button>
-              <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="hidedialog('closingdocument')">Cancel</button>
+              <div><p class="margintb">&nbsp;</p><input id="newdcolor" class="controls marginlr" type="color" value="#ffffff" style="height:18.5px;width: 3vw;"></div>
             </div>
-          </div>
+            <div class="flexstyle">
+              <button class="controls margintb" style="width:10vw;" onclick="createdocument()">Create</button>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+<!--save as dialog-->
+<div id="saveas" class="dialogboxbg hide background" onmousemove="mousemove(event,'saveasdialog')">
+  <div id="saveasdialog" class="dialogbox" style="top:20%;left:20%;">
+    <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;Save as JPEG</div><div class="closebtn"><a onclick="hidedialog('saveas')">X</a></div></div>
+    <div class="flexrow"><div>File Name:</div><input id="jpgname" class="controls" type="text" value="Download" style="width: 10vw;"></div>
+    <div class="flexrow" style="justify-content: center;"><img id="savejpg" src="" style="overflow: scroll;border: 1px solid black;" /></div>
+    <div class="flexrow"><div>Quality:</div><input id="saveasjpgslider" onchange="showsliderpercent('saveasjpgslider')" onmouseup="previewjpg()" class="controls" type="range" value="100" min="1" max="100" style="width: 70%;"><div id="saveasjpgsliderpc"></div></div>
+    <div class="flexrow"><div id="previewjpgfs">File Size:</div></div>
+    <div class="flexrow" style="justify-content: flex-end;">
+      <button class="controls marginlr" style="width: 8vw;height: 25px;" onclick="savejpg()">Save</button>
+      <button class="controls marginlr" style="width: 8vw;height: 25px;" onclick="hidedialog('saveas')">Cancel</button>
     </div>
   </div>
-
-    <div>
-      <div id="menulist" class="menu background">
-        <div style="padding-right: 5px;height:20px; width:20px;"><a href=""><img src="icon.svg" style="filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);"></a></div>
-        <div class="menuitems"><a href="#" onclick="menushow('file')">File</a>
-          <div id="file" class="menuitems-content background-dark hide">
-            <a class="contentlist" onclick="showdialog('new')">New Alt+Ctrl+N</a>
-            <a class="contentlist">Open Ctrl+O</a>
-            <a class="contentlist" onclick="save()">Save Ctrl+S</a>
-            <a class="contentlist">Save As...</a>
+</div>
+<!--closing dialog-->
+<div id="closingdocument" class="dialogboxbg hide background" onmousemove="mousemove(event,'confirmclosing')">
+  <div id="confirmclosing" class="dialogbox" style="width:28vw; height:20%;top:40%;left:36%;">
+    <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;File not saved!</div><div class="closebtn"><a onclick="hidedialog('closingdocument')">X</a></div></div>
+        <div>
+          <p class="margintb" style="padding-left: 20px;padding-top: 5px;">Close the file without saving?</p>
+          <div class="flexstyle" style="justify-content: center;">
+            <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="saveandclose()">Save</button>
+            <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="closedocument()">Don't Save</button>
+            <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="hidedialog('closingdocument')">Cancel</button>
           </div>
         </div>
-        <div class="menuitems"><a href="#">Edit</a></div>
-        <div class="menuitems"><a href="#">View</a></div>
-        <div class="menuitems"><a href="#">⚙️</a></div>
+  </div>
+</div>
+
+<div class="menu background">
+  <div style="height: 3vh;"><img src="./public/img/icon.svg" class="icons"></div>
+  <div class="menuitems"><a class="dropmenu" onclick="menushow('file')">File</a>
+    <div id="file" class="menuitems-content menuitems-hide background-dark hide">
+      <div class="contentlist hidesubmenu" onclick="showdialog('new')">New Alt+Ctrl+N</div>
+      <div class="contentlist hidesubmenu">Open Ctrl+O</div>
+      <div class="contentlist hidesubmenu" onclick="save('png',1,'download')">Save Ctrl+S</div>
+      <div class="saveasmenu contentlist dropmenu">Save As <img src="./public/img/carot-right.svg" class="caretright dropmenu"/>
+          <div class="menuitems-content saveassub background-dark">
+          <div class="contentlist" onclick="showdialog('saveas')">JPEG</div>
+          <div class="contentlist" onclick="save('image/png',1,'downloadpng')">PNG</div>
+          </div>
       </div>
     </div>
-  <div id="tooloptions" class="background tooloptions bringfront" onmousedown="hidemenu()"></div>
-  <div class="grid" onmousedown="hidemenu()">
+  </div>
+  <div class="menuitems"><a>Edit</a></div>
+  <div class="menuitems"><a>View</a></div>
+  <div style="height: 3vh;"><img class="icons" src="./public/img/settings-outline.svg"></div>
+  <div style="position: relative; height: 3vh;"><img id="fullscreen" class="icons" style="left: 10vw;" src="./public/img/expand.svg" onclick="togglefullscreen()"></div>
+</div>
+
+<div id="tooloptions" class="background tooloptions bringfront">
+  <div id="texttooloptions" class="hide">
+    <div class="tooloptionsflex">
+      <div>Font: <select id="texttooloptionsfont" class="controls marginlr" onchange="changetextfont()" value="16" style="font-size:2.5vh;width: 10vw;overflow: scroll;">
+        <option value="Arial" style="font-family:Arial;">Arial</option>
+        <option value="Courier New" style="font-family:'Courier New';">Courier New</option>
+        <option value="Cambria" style="font-family:Cambria;">Cambria</option>
+        <option value="Franklin Gothic Medium" style="font-family:'Franklin Gothic Medium';">Franklin Gothic</option>
+        <option value="Gill Sans" style="font-family:'Gill Sans';">Gill Sans</option>
+        <option value="Georgia" style="font-family:Georgia">Georgia</option>
+        <option value="Impact" style="font-family:Impact;">Impact</option>
+        <option value="Lucida Sans" style="font-family:'Lucida Sans', 'Lucida Sans Regular';">Lucida Sans</option>
+        <option value="Segoe UI" style="font-family:'Segoe UI';">Segoe UI</option>
+        <option value="Times New Roman" style="font-family:'Times New Roman';">Times New Roman</option>
+        <option value="Trebuchet MS" style="font-family:'Trebuchet MS';">Trebuchet MS</option>
+        <option value="Verdana" style="font-family:Verdana;">Verdana</option>
+      </select>
+      </div>
+      <div>Size: <select id="texttooloptionsfsize" onchange="changetextfont()" class="controls marginlr" value="16" style="width: 6vw;">
+        <option value="8">8</option>
+        <option value="10">10</option>
+        <option value="12">12</option>
+        <option value="14">14</option>
+        <option value="16">16</option>
+        <option value="18">18</option>
+        <option value="20">20</option>
+        <option value="22">22</option>
+        <option value="24">24</option>
+        <option value="26">26</option>
+        <option value="28">28</option>
+      </select>
+      </div>
+      <div style="width: 40vw;height: 4vh;"></div>
+      <div style="height: 4vh;"><img id="drawtextcheckmark" class="tooloptionicons" style="left: 50vw;" src="./public/img/checkmark.svg" onclick="drawtext()"/></div>
+    </div>
+  </div>
+</div>
+  <div class="grid">
     <div id="tools" class="tls background bringfront flexstyle">
       <div id="tmove" class="tls1" onclick="activatetool('tmove')"><img src="./public/img/move.svg" class="tlsimg"></div>
       <div id="tcrop" class="tls1" onclick="activatetool('tcrop')"><img src="./public/img/crop-outline.svg" class="tlsimg"></div>
@@ -355,18 +146,22 @@
       <div id="tbrush" class="tls1" onclick="activatetool('tbrush')"><img src="./public/img/brush-outline.svg" class="tlsimg"></div>
       <div id="terase" class="tls1" onclick="activatetool('terase')"><img src="./public/img/document-outline.svg" class="tlsimg"></div>
       <div id="tbucket" class="tls1" onclick="activatetool('tbucket')"><img src="./public/img/color-fill-outline.svg" class="tlsimg"></div>
-      <div id="tshape" class="tls1" onclick="activatetool('tshape')"><img src="./public/img/stop-outline.svg" class="tlsimg"></div>
+      <div id="tshape" class="tls1" onclick="activatetool('tshape')"><img src="./public/img/shapes-outline.svg" class="tlsimg"></div>
       <div id="ttext" class="tls1" onclick="activatetool('ttext')"><img src="./public/img/text.svg" class="tlsimg"></div>
       <div style="height: 2vw;width:2vw;position: relative;margin-top:5px;">
-        <input id="forecolor" type="color" value="#ffffff" hidden onchange="setcolor()"><div id="colorf" style="background-color:#ffffff;height:1vw;width: 1vw;position: absolute;border: 2px solid white;z-index:2;cursor:pointer;" onclick="opencolorbox1()"></div>
-        <input id="backcolor" type="color" value="#000000" hidden onchange="setcolor()"><div id="colorb" style="background-color:#000000;height:1vw;top:0.5vw;left:0.5vw;width: 1vw;position: absolute;border: 2px solid white;z-index: 1;cursor:pointer;" onclick="opencolorbox2()"></div>
-        <!--<div id="colorb" style="left:1.2vw;position: absolute;cursor:pointer;font-size: 5px;color:white;" onclick="swapcolor()">*</div>-->
+        <input id="forecolor" type="color" value="#ffffff" hidden onchange="setcolor()"><div id="colorf" style="background-color:#ffffff;height:0.8vw;width: 0.8vw;top:0.1vw;position: absolute;border: 2px solid white;z-index:2;cursor:pointer;" onclick="opencolorbox1()"></div>
+        <input id="backcolor" type="color" value="#000000" hidden onchange="setcolor()"><div id="colorb" style="background-color:#000000;height:0.8vw;width: 0.8vw;top:0.7vw;left:0.5vw;position: absolute;border: 2px solid white;z-index: 1;cursor:pointer;" onclick="opencolorbox2()"></div>
+        <div><img class="tlsswap" src="./public/img/repeat.svg" onclick="swapcolor()"></div>
       </div>
     </div>
     <div id="workspace" style="overflow:hidden;">
       <div id="projecttitle" class="projecttitle bringfront">
         
       </div>
+      <div id="texttooldiv" class="hide" style="background-color: rgba(255, 255, 255, 0.025);" onmousedown="mousedown(event)" onmousemove="mousemove(event,'texttool')">
+        <textarea id="texttool" class="inputtexttool" cols="1000" rows="1000"></textarea>
+      </div>
+
       <div id="projects"  onmousemove="pagemousemove(event)" style="height: 100%;">
 
       </div>
@@ -381,57 +176,22 @@
         </div>
         <div style="border-bottom: 2px solid rgb(44, 43, 43);height: 4vh;">&nbsp;Layers</div>
         <div id="layerbox">
-          <div id="layerbox0" class="layerbox">
-            <div id="layer01" class="layer">
-              <div><img id="eye01" src="./public/img/eye.svg" onclick="hidelayer('01')" class="layereye"></div>
-              <div><img id="preview01" src="" class="layerpreview"></div>
-              <div id="name01" class="layername" onclick="selectlayer('01')">Layers 1</div>
-            </div>
-            <div id="layer02" class="layer">
-              <div><img id="eye02" src="./public/img/eye.svg" onclick="hidelayer('02')" class="layereye"></div>
-              <div><img id="preview02" src="" class="layerpreview"></div>
-              <div id="name01" class="layername" onclick="selectlayer('02')">Layers 1</div>
-            </div>
-            <div id="layer03" class="layer">
-              <div><img id="eye03" src="./public/img/eye-off-sharp.svg" onclick="hidelayer('03')" class="layereye"></div>
-              <div><img id="preview03" src="" class="layerpreview"></div>
-              <div id="name03" class="layername" onclick="selectlayer('03')">Layers 1</div>
-            </div>
-            <div id="layer03" class="layer">
-              <div><img id="eye03" src="./public/img/eye-off-sharp.svg" onclick="hidelayer('03')" class="layereye"></div>
-              <div><img id="preview03" src="" class="layerpreview"></div>
-              <div id="name03" class="layername" onclick="selectlayer('03')">Layers 1</div>
-            </div>
-            <div id="layer03" class="layer">
-              <div><img id="eye03" src="./public/img/eye-off-sharp.svg" onclick="hidelayer('03')" class="layereye"></div>
-              <div><img id="preview03" src="" class="layerpreview"></div>
-              <div id="name03" class="layername" onclick="selectlayer('03')">Layers 1</div>
-            </div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-            <div id="layer01" class="layer" onclick="selectlayer('01')">&nbsp;Layers 1</div>
-          </div>
+
         </div>
       </div>
     </div>
 
     <div class="layeroptions background">
-      <div class="layeroptionbtn"><img src="./public/img/document-outline.svg" onclick="createlayer()"></div>
+      <div class="layeroptionbtn"><img style="width: 2.5vh;" src="./public/img/folder-open-outline.svg" onclick="createfolder()"></div>
+      <div class="layeroptionbtn"><img src="./public/img/document-outline.svg" onclick="newlayer()"></div>
       <div class="layeroptionbtn"><img src="./public/img/trash-outline.svg" onclick="deletelayer()"></div>
     </div>
 
   </div>
-  <script src="index.js"></script>
-  <script src="saveas.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
-<!--
-      <div id="projecttitle" class="projecttitle bringfront">
+<!--<div id="projecttitle" class="projecttitle bringfront">
         <div id="title0" class="documenttitle"><div style="cursor: pointer;" onclick="showdocument('0')">&nbsp;New Project</div><div class="closebtn" style="padding-left: 20px;"><a onclick="checksaved('0')">X</a></div></div>
       </div>
       <div id="projects"  onmousemove="pagemousemove(event,'doc0')" style="height: 100%;">
@@ -439,10 +199,7 @@
           <canvas class="canvass" id="D01" height="100" width="100" onmousedown="canvasmousedown(event,'D01')" onmouseup="mouseup()"></canvas>
         </div>
       </div>
-
-
       <div id="doc1" class="document1" style="width:500px;height:500px;clip-path: inset(0,200,0,200);" onmousedown="pagemousedown(event,'doc1')" onmouseup="mouseup()" onmousemove="pagemousemove(event,'doc1')">
         <canvas class="canvass" id="D11" height="100" width="100" onmousedown="mousedown(event,'D11')" onmouseup="mouseup()" onmousemove="mousemove(event,'D11')"></canvas>
         <canvas class="canvass" id="D12" onmousedown="mousedown(event,'D12')" onmouseup="mouseup()" onmousemove="mousemove(event,'D12')"></canvas>
-      </div>
--->
+      </div>-->
