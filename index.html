@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="./public/img/icon.svg">
 <title>Image EDitor
 </title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <img id="cursor" src="" class="cursorimg hide">
-<canvas id="tmpcanvas" class="hide"></canvas>
+  <svg xmlns="http://www.w3.org/2000/svg" id="S01" width="512" height="512" viewBox="0 0 512 512" style="position:absolute;display:none;" ><path d="M464,80H403.9a4,4,0,0,1-4-4c0-4.89,0-9,0-12.08A32,32,0,0,0,367.9,32h0l-223.79.26a32,32,0,0,0-31.94,31.93c0,3.23,0,7.22,0,11.81a4,4,0,0,1-4,4H48A16,16,0,0,0,32,96v16c0,54.53,30,112.45,76.52,125.35a7.82,7.82,0,0,1,5.55,5.9c5.77,26.89,23.52,52.5,51.41,73.61,20.91,15.83,45.85,27.5,68.27,32.48a8,8,0,0,1,6.25,7.8V444a4,4,0,0,1-4,4H176.45c-8.61,0-16,6.62-16.43,15.23A16,16,0,0,0,176,480H335.55c8.61,0,16-6.62,16.43-15.23A16,16,0,0,0,336,448H276a4,4,0,0,1-4-4V357.14a8,8,0,0,1,6.25-7.8c22.42-5,47.36-16.65,68.27-32.48,27.89-21.11,45.64-46.72,51.41-73.61a7.82,7.82,0,0,1,5.55-5.9C450,224.45,480,166.53,480,112V96A16,16,0,0,0,464,80ZM112,198.22a4,4,0,0,1-6,3.45c-10.26-6.11-17.75-15.37-22.14-21.89-11.91-17.69-19-40.67-19.79-63.63a4,4,0,0,1,4-4.15h40a4,4,0,0,1,4,4C112.05,143.45,112,174.87,112,198.22Zm316.13-18.44c-4.39,6.52-11.87,15.78-22.13,21.89a4,4,0,0,1-6-3.46c0-26.51,0-56.63-.05-82.21a4,4,0,0,1,4-4h40a4,4,0,0,1,4,4.15C447.16,139.11,440.05,162.09,428.14,179.78Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" id="svg10" width="200" height="500" style="position:absolute;z-index:-1;display:none;" viewBox="0 0 512 512"><path d="M464,80H403.9a4,4,0,0,1-4-4c0-4.89,0-9,0-12.08A32,32,0,0,0,367.9,32h0l-223.79.26a32,32,0,0,0-31.94,31.93c0,3.23,0,7.22,0,11.81a4,4,0,0,1-4,4H48A16,16,0,0,0,32,96v16c0,54.53,30,112.45,76.52,125.35a7.82,7.82,0,0,1,5.55,5.9c5.77,26.89,23.52,52.5,51.41,73.61,20.91,15.83,45.85,27.5,68.27,32.48a8,8,0,0,1,6.25,7.8V444a4,4,0,0,1-4,4H176.45c-8.61,0-16,6.62-16.43,15.23A16,16,0,0,0,176,480H335.55c8.61,0,16-6.62,16.43-15.23A16,16,0,0,0,336,448H276a4,4,0,0,1-4-4V357.14a8,8,0,0,1,6.25-7.8c22.42-5,47.36-16.65,68.27-32.48,27.89-21.11,45.64-46.72,51.41-73.61a7.82,7.82,0,0,1,5.55-5.9C450,224.45,480,166.53,480,112V96A16,16,0,0,0,464,80ZM112,198.22a4,4,0,0,1-6,3.45c-10.26-6.11-17.75-15.37-22.14-21.89-11.91-17.69-19-40.67-19.79-63.63a4,4,0,0,1,4-4.15h40a4,4,0,0,1,4,4C112.05,143.45,112,174.87,112,198.22Zm316.13-18.44c-4.39,6.52-11.87,15.78-22.13,21.89a4,4,0,0,1-6-3.46c0-26.51,0-56.63-.05-82.21a4,4,0,0,1,4-4h40a4,4,0,0,1,4,4.15C447.16,139.11,440.05,162.09,428.14,179.78Z"/></svg>
+<div id="message" class="hide" style="z-index:40;position:absolute;background-color: white;color:black;border-radius:20px;width:50vw;height:30px;text-align: center;font-size: 19px;padding-top: 7px;">Not editable.</div>
+<div id="eyedropcolor" class="hide" style="z-index:50;position: absolute;width:30px;height: 30px;border-radius: 50%;background-color: white;border:2px solid black;"></div>
+<img id="cursor" src="" class="cursorimg hide"><img id="opennewimage" src="" class="hide" style="background-size: 100% 100%;">
+<input id="fileopen" class="controls" type="file" hidden onchange="openfile()" multiple accept="image/*">
 <div id="new" class="dialogboxbg hide background" onmousemove="mousemove(event,'newdialog')">
   <div id="newdialog" class="dialogbox" style="width:40vw; height:35%;top:15%;left:15%;">
     <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;New Project</div><div class="closebtn"><a onclick="hidedialog('new')">X</a></div></div>
@@ -17,9 +22,9 @@
           <p class="margintb">Document Name:</p>
           <div><input id="documentname" class="controls" type="text" value="New Project" style="width: 10vw;"></div>
           <div class="flexstyle">
-            <div><p class="margintb">Width:</p><input id="newwidth" onchange="validatenumber('newwidth')" class="controls" type="number" value="1920" style="width: 4vw;"></div>
+            <div><p class="margintb">Width:</p><input id="newwidth" onchange="validatenumber('newwidth','100')" class="controls" type="number" value="1920" style="width: 4vw;"></div>
             <div><p class="margintb">&nbsp;</p><button class="controls marginlr" onclick="swapheightwidth()">⇆</button></div>
-            <div><p class="margintb">Height:</p><input id="newheight" onchange="validatenumber('newheight')" class="controls" type="number" value="1080" style="width: 4vw;"></div>
+            <div><p class="margintb">Height:</p><input id="newheight" onchange="validatenumber('newheight','100')" class="controls" type="number" value="1080" style="width: 4vw;"></div>
             <div><p class="margintb">&nbsp;</p><select id="newtype" class="controls marginlr" value="Pixels" style="width: 6vw;">
               <option value="pixels">Pixels</option>
               <option value="percent">Percent</option>
@@ -29,7 +34,7 @@
             </div>
           </div>
             <div class="flexstyle">
-              <div><p class="margintb">DPI:</p><input id="newdpi" onchange="validatenumber('newdpi')" class="controls" type="number" value="72" style="width: 4vw;"></div>
+              <div><p class="margintb">DPI:</p><input id="newdpi" onchange="validatenumber('newdpi','72')" class="controls" type="number" value="72" style="width: 4vw;"></div>
               <div><p class="margintb">&nbsp;</p><select id="newdpitype" class="controls marginlr" value="Pixels / In" style="width: 5vw;">
                 <option value="pixelsin">Pixels / In</option>
                 <option value="pixelscm">Pixels / Cm</option></select>
@@ -45,7 +50,7 @@
               <div><p class="margintb">&nbsp;</p><input id="newdcolor" class="controls marginlr" type="color" value="#ffffff" style="height:18.5px;width: 3vw;"></div>
             </div>
             <div class="flexstyle">
-              <button class="controls margintb" style="width:10vw;" onclick="createdocument()">Create</button>
+              <button class="controls margintb" style="width:10vw;" onclick="createdocument(0,0)">Create</button>
             </div>
         </div>
       </div>
@@ -53,52 +58,118 @@
 </div>
 <!--save as dialog-->
 <div id="saveas" class="dialogboxbg hide background" onmousemove="mousemove(event,'saveasdialog')">
-  <div id="saveasdialog" class="dialogbox" style="top:20%;left:20%;">
+  <div id="saveasdialog" class="dialogbox" style=top:20%;left:20%;width:50%;height:65%;">
     <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;Save as JPEG</div><div class="closebtn"><a onclick="hidedialog('saveas')">X</a></div></div>
-    <div class="flexrow"><div>File Name:</div><input id="jpgname" class="controls" type="text" value="Download" style="width: 10vw;"></div>
-    <div class="flexrow" style="justify-content: center;"><img id="savejpg" src="" style="overflow: scroll;border: 1px solid black;" /></div>
-    <div class="flexrow"><div>Quality:</div><input id="saveasjpgslider" onchange="showsliderpercent('saveasjpgslider')" onmouseup="previewjpg()" class="controls" type="range" value="100" min="1" max="100" style="width: 70%;"><div id="saveasjpgsliderpc"></div></div>
-    <div class="flexrow"><div id="previewjpgfs">File Size:</div></div>
+    <div class="flexrow" ><div>File Name:</div><input id="jpgname" class="controls" type="text" value="Download" style="width: 10vw;"></div>
+    <div class="flexrow" style="justify-content: center;width:100%;margin:4px 4px;"><img id="savejpg" src="" style="border: 1px solid black;object-fit:scale-down ;width:93%" /></div>
+    <div class="flexrow" ><div>Quality:</div><input id="saveasjpgslider" onchange="showsliderpercent('saveasjpgslider')" oninput="showsliderpercent('saveasjpgslider')" onmouseup="previewjpg()" class="controls" type="range" value="100" min="1" max="100" style="width: 85%;"><div id="saveasjpgsliderpc">100%</div></div>
+    <div class="flexrow" ><div id="previewjpgfs">File Size:</div></div>
     <div class="flexrow" style="justify-content: flex-end;">
       <button class="controls marginlr" style="width: 8vw;height: 25px;" onclick="savejpg()">Save</button>
       <button class="controls marginlr" style="width: 8vw;height: 25px;" onclick="hidedialog('saveas')">Cancel</button>
     </div>
   </div>
 </div>
+<!--Brightness & contrast dialog-->
+<div id="brightnesscontrast" class="dialogboxbg hide background" onmousemove="mousemove(event,'brightnesscontrastdialog')">
+  <div id="brightnesscontrastdialog" class="dialogbox" style="width:28vw;height:211px;top:20%;left:20%;">
+    <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;Brightness & Contrast</div><div class="closebtn"><a onclick="hideimagemenudialog('brightnesscontrast')">X</a></div></div>
+    <div class="flexrow" style="justify-content:space-between;"><div>Brightness:</div><div><input id="brightnessimagetbox" onkeyup="previewbrightnessimage('brightnessimagetbox')" class="controls" style="width:50px;text-align: right;" type="text" value="0"></div></div>
+    <div class="flexrow"><input id="brightnessimageslider" oninput="previewbrightnessimage('brightnessimageslider')" class="controls" type="range" value="0" min="-150" max="150" style="width: 98%;"></div>
+    <div class="flexrow" style="justify-content:space-between;"><div>Contrast:</div><div><input id="contrastimagetbox" onkeyup="previewcontrastimage('contrastimagetbox')" class="controls" style="width:50px;text-align: right;" type="text" value="0"></div></div>
+    <div class="flexrow"><input id="contrastimageslider" oninput="previewcontrastimage('contrastimageslider')" class="controls" type="range" value="0" min="-120" max="120" style="width:98%;"></div>
+    <div class="flexrow" style="margin-bottom: 0;"><input id="brightnesscontrastpreviewcheckbox" onchange="brightnessimage()" class="controls" type="checkbox" checked><label for="brightnesscontrastpreviewcheckbox">Preview</label></div>
+    <div class="flexrow" style="justify-content: flex-end;margin-top: 0;">
+      <button class="controls marginlr" style="width: 5vw;height: 22px;" onclick="changebrightnesscontrast()">OK</button>
+      <button class="controls marginlr" style="width: 5vw;height: 22px;" onclick="resetbrightnesscontrastslider()">Reset</button>
+    </div>
+  </div>
+</div>
+<!--Color balance dialog-->
+<div id="colorbalance" class="dialogboxbg hide background" onmousemove="mousemove(event,'colorbalancedialog')">
+  <div id="colorbalancedialog" class="dialogbox" style="width:28vw;height:275px;top:20%;left:20%;">
+    <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;Brightness & Contrast</div><div class="closebtn"><a onclick="hideimagemenudialog('colorbalance')">X</a></div></div>
+    <div class="flexrow" style="justify-content:space-between;"><div>Cyan - Red:</div><div><input id="colorbalanceredtbox" onkeyup="previewcolorbalanceimage('colorbalanceredtbox')" class="controls" style="width:50px;text-align: right;" type="text" value="0"></div></div>
+    <div class="flexrow"><input id="colorbalanceredslider" oninput="previewcolorbalanceimage('colorbalanceredslider')" class="controls" type="range" value="0" min="-100" max="100" style="width: 98%;"></div>
+    <div class="flexrow" style="justify-content:space-between;"><div>Magenta - Green:</div><div><input id="colorbalancegreentbox" onkeyup="previewcolorbalanceimage('colorbalancegreentbox')" class="controls" style="width:50px;text-align: right;" type="text" value="0"></div></div>
+    <div class="flexrow"><input id="colorbalancegreenslider" oninput="previewcolorbalanceimage('colorbalancegreenslider')" class="controls" type="range" value="0" min="-100" max="100" style="width:98%;"></div>
+    <div class="flexrow" style="justify-content:space-between;"><div>Yellow - Blue:</div><div><input id="colorbalancebluetbox" onkeyup="previewcolorbalanceimage('colorbalancebluetbox')" class="controls" style="width:50px;text-align: right;" type="text" value="0"></div></div>
+    <div class="flexrow"><input id="colorbalanceblueslider" oninput="previewcolorbalanceimage('colorbalanceblueslider')" class="controls" type="range" value="0" min="-100" max="100" style="width:98%;"></div>
+    <div class="flexrow" style="margin-bottom: 0;"><input id="colorbalancepreviewcheckbox" onchange="colorbalanceimage()" class="controls" type="checkbox" checked><label for="colorbalancepreviewcheckbox">Preview</label></div>
+    <div class="flexrow" style="justify-content: flex-end;margin-top: 0;">
+      <button class="controls marginlr" style="width: 5vw;height: 22px;" onclick="changecolorbalance()">OK</button>
+      <button class="controls marginlr" style="width: 5vw;height: 22px;" onclick="resetcolorbalanceslider()">Reset</button>
+    </div>
+  </div>
+</div>
 <!--closing dialog-->
 <div id="closingdocument" class="dialogboxbg hide background" onmousemove="mousemove(event,'confirmclosing')">
-  <div id="confirmclosing" class="dialogbox" style="width:28vw; height:20%;top:40%;left:36%;">
+  <div id="confirmclosing" class="dialogbox" style="width:280px; height:125px;top:40%;left:36%;">
     <div class="dialogtitle background-dark" onmousedown="mousedown(event)"><div>&nbsp;File not saved!</div><div class="closebtn"><a onclick="hidedialog('closingdocument')">X</a></div></div>
         <div>
           <p class="margintb" style="padding-left: 20px;padding-top: 5px;">Close the file without saving?</p>
           <div class="flexstyle" style="justify-content: center;">
-            <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="saveandclose()">Save</button>
-            <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="closedocument()">Don't Save</button>
-            <button class="controls marginlr" style="width: 8vw;height: 25px;margin-top: 30px;" onclick="hidedialog('closingdocument')">Cancel</button>
+            <button class="controls marginlr" style="width: 7vw;height: 25px;margin-top: 30px;" onclick="saveandclose()">Save</button>
+            <button class="controls marginlr" style="width: 7vw;height: 25px;margin-top: 30px;" onclick="closedocument()">Don't Save</button>
+            <button class="controls marginlr" style="width: 7vw;height: 25px;margin-top: 30px;" onclick="hidedialog('closingdocument')">Cancel</button>
           </div>
         </div>
   </div>
 </div>
 
-<div class="menu background">
+<div id="menu" class="menu background">
   <div style="height: 3vh;"><img src="./public/img/icon.svg" class="icons"></div>
-  <div class="menuitems"><a class="dropmenu" onclick="menushow('file')">File</a>
+  <div class="menuitems"><a class="dropmenu" onmouseenter="menuhovershow('file')" onclick="menushow('file')">File</a>
     <div id="file" class="menuitems-content menuitems-hide background-dark hide">
       <div class="contentlist hidesubmenu" onclick="showdialog('new')">New Alt+Ctrl+N</div>
-      <div class="contentlist hidesubmenu">Open Ctrl+O</div>
+      <div class="contentlist hidesubmenu" onclick="showopen()">Open Ctrl+O</div>
       <div class="contentlist hidesubmenu" onclick="save('png',1,'download')">Save Ctrl+S</div>
       <div class="saveasmenu contentlist dropmenu">Save As <img src="./public/img/carot-right.svg" class="caretright dropmenu"/>
           <div class="menuitems-content saveassub background-dark">
-          <div class="contentlist" onclick="showdialog('saveas')">JPEG</div>
-          <div class="contentlist" onclick="save('image/png',1,'downloadpng')">PNG</div>
+            <div class="contentlist" onclick="showdialog('saveas')">JPEG</div>
+            <div class="contentlist" onclick="save('image/png',1,'downloadpng')">PNG</div>
           </div>
       </div>
     </div>
   </div>
-  <div class="menuitems"><a>Edit</a></div>
+  <div class="menuitems"><a class="dropmenu" onmouseenter="menuhovershow('Edit')" onclick="menushow('Edit')">Edit</a>
+    <div id="Edit" class="menuitems-content menuitems-hide background-dark hide">
+        <div class="contentlist hidesubmenu" onclick="cutimage()">Cut</div>
+        <div class="contentlist hidesubmenu" onclick="copyimage()">Copy</div>
+        <div class="contentlist hidesubmenu" onclick="pasteimage()">Paste</div>
+        <div class="divider" onclick=""><div style="border-top:1px solid rgb(79, 78, 78);height: 0px;"></div></div>
+        <div class="adjustmentsmenu contentlist dropmenu">Transform <img src="./public/img/carot-right.svg" class="caretright dropmenu"/>
+          <div class="menuitems-content adjustmentsmenusub background-dark">
+            <div class="contentlist" onclick="rotateimage('cw')">Rotate CW</div>
+            <div class="contentlist" onclick="rotateimage('cc')">Rotate CC</div>
+            <div class="contentlist" onclick="flipimage('h')">Flip Horizontally</div>
+            <div class="contentlist" onclick="flipimage('v')">Flip Vertically</div>
+          </div>
+        </div>
+      <div class="contentlist hidesubmenu" onclick="showdialog('new')">ddd</div>
+    </div>
+  </div>
+  <div class="menuitems"><a class="dropmenu" onmouseenter="menuhovershow('Image')" onclick="menushow('Image')">Image</a>
+    <div id="Image" class="menuitems-content menuitems-hide background-dark hide">
+      <div class="adjustmentsmenu contentlist dropmenu">Adjustments <img src="./public/img/carot-right.svg" class="caretright dropmenu"/>
+          <div class="menuitems-content adjustmentsmenusub background-dark">
+            <div class="contentlist" onclick="showimagemenudialog('brightnesscontrast')">Brightness/Contrast...</div>
+            <div class="divider" onclick=""><div style="border-top:1px solid rgb(79, 78, 78);height: 0px;"></div></div>
+            <div class="contentlist" onclick="showimagemenudialog('colorbalance')">Color Balance Ctrl+B</div>
+            <div class="contentlist" onclick="blackandwhite()">Black & White</div>
+            <div class="divider" onclick=""><div style="border-top:1px solid rgb(79, 78, 78);height: 0px;"></div></div>
+            <div class="contentlist" onclick="showimagemenudialog('invert')">Invert</div>
+            <div class="divider" onclick=""><div style="border-top:1px solid rgb(79, 78, 78);height: 0px;"></div></div>
+            <div class="contentlist" onclick="">New Alt+Ctrl+N</div>
+          </div>
+      </div>
+      <div class="contentlist hidesubmenu" onclick="showdialog('new')">ddd</div>
+    </div>
+  </div>
   <div class="menuitems"><a>View</a></div>
-  <div style="height: 3vh;"><img class="icons" src="./public/img/settings-outline.svg"></div>
-  <div style="position: relative; height: 3vh;"><img id="fullscreen" class="icons" style="left: 10vw;" src="./public/img/expand.svg" onclick="togglefullscreen()"></div>
+  <div style="width: 100px;"></div>
+  <div style="height: 3vh;" title="Settings"><img class="icons" src="./public/img/settings-outline.svg" onclick="test()"></div>
+  <div style="position: relative; height: 3vh;" title="Fullscreen"><img id="fullscreen" class="icons" style="left: 10vw;" src="./public/img/expand.svg" onclick="togglefullscreen()"></div>
 </div>
 
 <div id="tooloptions" class="background tooloptions bringfront">
@@ -119,7 +190,9 @@
         <option value="Verdana" style="font-family:Verdana;">Verdana</option>
       </select>
       </div>
-      <div>Size: <select id="texttooloptionsfsize" onchange="changetextfont()" class="controls marginlr" value="16" style="width: 6vw;">
+      <div>Size(px):</div>
+      <div style="position: relative;">
+      <select id="texttooloptionsfsize" onchange="changetextfont('list')" class="controls marginlr" value="16" style="width: 70px;">
         <option value="8">8</option>
         <option value="10">10</option>
         <option value="12">12</option>
@@ -131,23 +204,58 @@
         <option value="24">24</option>
         <option value="26">26</option>
         <option value="28">28</option>
-      </select>
+      </select> <input id="texttooloptionsfsizetext" type="text" value="16" style="height:16px;width:50px;position: absolute;left:0;" onkeyup="changetextfont('text')" class="controls"/>
+      </div>
+      <div><input id="texttoolcolor" type="color" value="#ffffff" hidden onchange="changetextfont()">
+        <div id="texttoolcolorpicker" style="background-color:#ffffff;height:2.5vh;width:2.5vh;border: 2px solid white;cursor:pointer;" onclick="opentexttoolcolor()"></div>
       </div>
       <div style="width: 40vw;height: 4vh;"></div>
+      <div style="height: 4vh;"><img id="drawtextcancel" class="tooloptionicons" style="left: 50vw;" src="./public/img/close-outline.svg" onclick="canceldrawtext()"/></div>
       <div style="height: 4vh;"><img id="drawtextcheckmark" class="tooloptionicons" style="left: 50vw;" src="./public/img/checkmark.svg" onclick="drawtext()"/></div>
     </div>
   </div>
+
+  <div id="movetooloptions" class="hide">
+    <div class="tooloptionsflex">
+      <div>Move: </div>
+      <div class="flexrow"><input id="showtransformcheckbox" onchange="toggletransfrom('showtransformcheckbox')" class="controls" type="checkbox"><label for="showtransformcheckbox">Show Transform</label></div>
+      <div style="width: 3vw;height: 4vh;"></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Align Left Edges" src="./public/img/checkmark.svg" onclick="alignlayershorizontal('left')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Center Horizontally" src="./public/img/checkmark.svg" onclick="alignlayershorizontal('center')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Align Right Edges" src="./public/img/checkmark.svg" onclick="alignlayershorizontal('right')"/></div>
+      <div style="margin-left:20px;color:rgb(57, 57, 57);">|</div>
+      <div style="height: 4vh;margin-left:8px;"><img class="tooloptionicons" title="Space Between" src="./public/img/checkmark.svg" onclick="alignlayershorizontal('gap')"/></div>
+      <div><input id="movetoolx" type="text" value="10" style="width:25px;" onkeyup="validatenumber('movetoolx','10')" class="controls"/></div>
+      <div style="color:rgb(193, 193, 193);">px</div>
+      <div style="height: 4vh;width:40px;"></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Align Top Edges" src="./public/img/checkmark.svg" onclick="alignlayersvertical('top')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Center Vertically" src="./public/img/checkmark.svg" onclick="alignlayersvertical('center')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Align Bottom Edges" src="./public/img/checkmark.svg" onclick="alignlayersvertical('bottom')"/></div>
+      <div style="margin-left:20px;color:rgb(57, 57, 57);">|</div>
+      <div style="height: 4vh;margin-left:8px;"><img class="tooloptionicons" title="Space Between" src="./public/img/checkmark.svg" onclick="alignlayersvertical('gap')"/></div>
+      <div><input id="movetooly" type="text" value="10" style="width:25px;" onkeyup="validatenumber('movetooly','10')" class="controls"/></div>
+      <div style="color:rgb(193, 193, 193);">px</div>
+      <div style="height: 4vh;"></div>
+      <div style="width: 3vw;height: 4vh;"></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Flip Horizontally" src="./public/img/checkmark.svg" onclick="flipimage('h')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Flip Vertically" src="./public/img/checkmark.svg" onclick="flipimage('v')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Rotate CW" src="./public/img/checkmark.svg" onclick="rotateimage('cw')"/></div>
+      <div style="height: 4vh;"><img class="tooloptionicons" title="Rotate CC" src="./public/img/checkmark.svg" onclick="rotateimage('cc')"/></div>
+    </div>
+  </div>
+
+
 </div>
   <div class="grid">
     <div id="tools" class="tls background bringfront flexstyle">
-      <div id="tmove" class="tls1" onclick="activatetool('tmove')"><img src="./public/img/move.svg" class="tlsimg"></div>
-      <div id="tcrop" class="tls1" onclick="activatetool('tcrop')"><img src="./public/img/crop-outline.svg" class="tlsimg"></div>
-      <div id="tdrop" class="tls1" onclick="activatetool('tdrop')"><img src="./public/img/eyedrop-outline.svg" class="tlsimg"></div>
-      <div id="tbrush" class="tls1" onclick="activatetool('tbrush')"><img src="./public/img/brush-outline.svg" class="tlsimg"></div>
-      <div id="terase" class="tls1" onclick="activatetool('terase')"><img src="./public/img/document-outline.svg" class="tlsimg"></div>
-      <div id="tbucket" class="tls1" onclick="activatetool('tbucket')"><img src="./public/img/color-fill-outline.svg" class="tlsimg"></div>
-      <div id="tshape" class="tls1" onclick="activatetool('tshape')"><img src="./public/img/shapes-outline.svg" class="tlsimg"></div>
-      <div id="ttext" class="tls1" onclick="activatetool('ttext')"><img src="./public/img/text.svg" class="tlsimg"></div>
+      <div id="tmove" title="Move Tool" class="tls1" onclick="activatetool('tmove')"><img src="./public/img/move.svg" class="tlsimg"></div>
+      <div id="tcrop" title="Crop" class="tls1" onclick="activatetool('tcrop')"><img src="./public/img/crop-outline.svg" class="tlsimg"></div>
+      <div id="tdrop" title="Eye Drop" class="tls1" onclick="activatetool('tdrop')"><img src="./public/img/eyedrop-outline.svg" class="tlsimg"></div>
+      <div id="tbrush" title="Brush" class="tls1" onclick="activatetool('tbrush')"><img src="./public/img/brush-outline.svg" class="tlsimg"></div>
+      <div id="terase" title="Erase" class="tls1" onclick="activatetool('terase')"><img src="./public/img/document-outline.svg" class="tlsimg"></div>
+      <div id="tbucket" title="Fill Color" class="tls1" onclick="activatetool('tbucket')"><img src="./public/img/color-fill-outline.svg" class="tlsimg"></div>
+      <div id="tshape" title="Shape" class="tls1" onclick="activatetool('tshape')"><img src="./public/img/shapes-outline.svg" class="tlsimg"></div>
+      <div id="ttext" title="Text" class="tls1" onclick="activatetool('ttext')"><img src="./public/img/text.svg" class="tlsimg"></div>
       <div style="height: 2vw;width:2vw;position: relative;margin-top:5px;">
         <input id="forecolor" type="color" value="#ffffff" hidden onchange="setcolor()"><div id="colorf" style="background-color:#ffffff;height:0.8vw;width: 0.8vw;top:0.1vw;position: absolute;border: 2px solid white;z-index:2;cursor:pointer;" onclick="opencolorbox1()"></div>
         <input id="backcolor" type="color" value="#000000" hidden onchange="setcolor()"><div id="colorb" style="background-color:#000000;height:0.8vw;width: 0.8vw;top:0.7vw;left:0.5vw;position: absolute;border: 2px solid white;z-index: 1;cursor:pointer;" onclick="opencolorbox2()"></div>
@@ -161,14 +269,24 @@
       <div id="texttooldiv" class="hide" style="background-color: rgba(255, 255, 255, 0.025);" onmousedown="mousedown(event)" onmousemove="mousemove(event,'texttool')">
         <textarea id="texttool" class="inputtexttool" cols="1000" rows="1000"></textarea>
       </div>
-
-      <div id="projects"  onmousemove="pagemousemove(event)" style="height: 100%;">
-
+      
+ 
+      <div id="projects"  onmousemove="pagemousemove(event)" style="height: 100%;position: relative;">
+        <div id="transform" class="hide" style="position: absolute;z-index: 28;" onmousedown="mousedowntransform(event,'main')">
+          <div id="transformgrid" class="transform">
+            <div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox" style="justify-content: center;"><div class='transformtopbottom' style="top: -5px;" onmousedown="mousedowntransform(event,'top')"></div></div><div class="transformgridbox"></div><div class="transformgridbox"></div>
+            <div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div>
+            <div class="transformgridbox"><div class="transformleftright" style="left: -5px;" onmousedown="mousedowntransform(event,'left')"></div></div><div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"><div class='transformleftright' style="right: -5px;" onmousedown="mousedowntransform(event,'right')"></div></div>
+            <div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox"></div>
+            <div class="transformgridbox"></div><div class="transformgridbox"></div><div class="transformgridbox" style="justify-content: center;"><div class='transformtopbottom' style="bottom: -5px;" onmousedown="mousedowntransform(event,'bottom')"></div></div><div class="transformgridbox"></div><div class="transformgridbox"></div>
+          </div>
+        </div>
       </div>
     </div>
     <div style="display: grid;grid-template-rows: 40vh 50vh;">
-      <div class="background bringfront"><Button id="btnsubmit" class="button btn btn-primary" type="button" title="Submit">Button1</Button>
-           <Button id="btnsubmit" class="button btn btn-primary" type="button" title="Submit">Button1</Button>
+      <div class="background bringfront"><Button id="btnsubmit" class="button btn btn-primary" type="button" onclick="test2()" title="Submit">test2</Button>
+           <Button id="btnsubmit" class="button btn btn-primary" type="button" onclick="test()" title="Submit">test1</Button>
+           <div id="testmessage" style="font-size: 16px;color:white;word-wrap: break-word;"></div>
       </div>
       <div class="background bringfront">
         <div class="projecttitle bringfront">
@@ -182,9 +300,11 @@
     </div>
 
     <div class="layeroptions background">
-      <div class="layeroptionbtn"><img style="width: 2.5vh;" src="./public/img/folder-open-outline.svg" onclick="createfolder()"></div>
-      <div class="layeroptionbtn"><img src="./public/img/document-outline.svg" onclick="newlayer()"></div>
-      <div class="layeroptionbtn"><img src="./public/img/trash-outline.svg" onclick="deletelayer()"></div>
+      <div class="layeroptionbtn" onclick="linklayers()"><img title="Link" style="width: 2.5vh;" src="./public/img/link.svg"></div>
+      <div class="layeroptionbtn" onclick="createfolder()"><img title="Folder" style="width: 2.5vh;" src="./public/img/folder-open-outline.svg"></div>
+      <div class="layeroptionbtn"  onclick="newlayer()"><img title="New Layer" src="./public/img/document-outline.svg"></div>
+      <div class="layeroptionbtn" onclick="deletelayer()"><img title="Delete Layer" src="./public/img/trash-outline.svg"></div>
+      <div style="width:1px;"></div>
     </div>
 
   </div>
@@ -203,3 +323,5 @@
         <canvas class="canvass" id="D11" height="100" width="100" onmousedown="mousedown(event,'D11')" onmouseup="mouseup()" onmousemove="mousemove(event,'D11')"></canvas>
         <canvas class="canvass" id="D12" onmousedown="mousedown(event,'D12')" onmouseup="mouseup()" onmousemove="mousemove(event,'D12')"></canvas>
       </div>-->
+
+

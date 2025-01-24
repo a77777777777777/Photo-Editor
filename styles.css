@@ -35,7 +35,6 @@ body{
   position: absolute;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
   height: 2.5vh;
-  margin-top:1px;
   padding:0.25vh;
   margin-left: 0.2vw;
   border-radius: 3px;
@@ -55,12 +54,12 @@ body{
 }
 .menuitems{
   cursor: pointer;
-  margin-left:3.5vh;
-  margin-right: 1.5vw;
-  margin-top:1px;
-  padding: 0.25vh 5px;
+  margin-left:3.2vh;
+  margin-right: 0.5vw;
+  padding: 0.25vh 0.5vh;
   position: relative;
   height: 2.5vh;
+  font-size: 14px;
   border-radius: 3px;
 }
 .menuitems:hover{
@@ -81,6 +80,16 @@ width: 160px;
 position: absolute;
 border: 1px solid rgba(172, 171, 171, 0.518);
 }
+.caretright{
+  height: 10px;
+  margin-top: 4px;
+  float:right;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+}
+.divider{
+  padding:3px 0px;
+  cursor: default;
+}
 .saveasmenu{
   position: relative;
 }
@@ -91,6 +100,18 @@ border: 1px solid rgba(172, 171, 171, 0.518);
   display: none;
   position: absolute;
   top:0px;
+  left:160px;
+}
+.adjustmentsmenu{
+  position: relative;
+}
+.adjustmentsmenu:hover .adjustmentsmenusub{
+  display: block;
+}
+.adjustmentsmenusub{
+  display: none;
+  position: absolute;
+  top:-3px;
   left:160px;
 }
 .hidesubmenu{
@@ -143,7 +164,7 @@ border: 1px solid rgba(172, 171, 171, 0.518);
 }
 .closebtn{
   cursor: pointer;
-  margin-right: 5px;
+  margin-right: 7px;
   font-weight: 500;
   color:rgb(182, 181, 181);
 }
@@ -162,7 +183,7 @@ border: 1px solid rgba(172, 171, 171, 0.518);
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.008);
 }
 .dialogbox{
   position:absolute;
@@ -207,7 +228,7 @@ input:focus{
   display: flex;
   width: auto;
   gap:5px;
-  margin:20px 20px;
+  margin:10px 8px;
   align-items: center;
 }
 .margintb{
@@ -225,7 +246,8 @@ input:focus{
 }
 .canvass{
   position: absolute;
-  border:2px dashed blue;
+  object-fit:fill;
+  object-position: left top;
 }
 .bringfront{
   z-index: 29;
@@ -318,11 +340,12 @@ input:focus{
 }
 .layeroptions{
   position: absolute;
-  bottom:0;
+  bottom:0px;
   right: 0px;
   width: 16%;
   height: 3vh;
   display: flex;
+  gap:4%;
   justify-content: flex-end;
   border-top: 2px solid rgb(60, 60, 60);
   z-index: 30;
@@ -330,10 +353,15 @@ input:focus{
 .layeroptionbtn{
   cursor: pointer;
   align-self: flex-end;
-  margin-right: 0.2vw;
   height: 2.5vh;
   width: 2.5vh;
+  padding:2px 3px;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+}
+.layeroptionbtn:hover{
+  border-radius: 5px;
+  background-color: rgb(198, 194, 194);
+  box-shadow: 1px 1px 5px rgb(235, 234, 234) inset;
 }
 .layer{
   display: flex;
@@ -349,14 +377,21 @@ input:focus{
   margin-top:0.4vw;
   margin-left:0.2vw;
   height:1vw;
-  width:1vw;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+}
+.layerlink{
+  margin-top:0.2vw;
+  margin-left:0.2vw;
+  border:0;
+  height:1vw;
+  transform: rotate(90deg);
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
 }
 .layerpreview{
   margin-top:0.3vw;
   margin-left:0.2vw;
   background-image: url('./public/img/checker.png');
-  background-size: 20px 20px;
+  background-size: 12px 12px;
   background-repeat: repeat;
   height:4vh;
   width:3vw;
@@ -370,12 +405,41 @@ input:focus{
 .cursorimg{
   position: absolute;
   z-index: 31;
-  height: 3vw;
-  width: 3vw;
+  height: 2vw;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
 }
-.caretright{
-  height: 10px;
-  padding-left: 50px;
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+
+.transform{
+  display: grid;
+  background-color: rgba(0, 0, 0, 0.008);
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  border: 2px solid blue;
+}
+.transformgridbox{
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.transformleftright{
+  position: absolute;
+  border:2px solid blue;
+  background-color: white;
+  align-self: center;
+  width:6px;
+  height:6px;
+}
+.transformleftright:hover{
+  cursor:e-resize;
+}
+.transformtopbottom{
+  position: absolute;
+  border:2px solid blue;
+  background-color: white;
+  width:6px;
+  height:6px;
+}
+.transformtopbottom:hover{
+  cursor:n-resize;
 }
