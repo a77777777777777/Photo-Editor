@@ -17,9 +17,8 @@ body{
     margin:0;
     overflow: hidden;
     height: 100vh;
-    -webkit-user-select: none;
-    -ms-user-select: none;
     user-select: none;
+    scrollbar-color:  rgb(19, 19, 19)rgb(94, 94, 94);
 }
 .background{
   background-color: rgb(78, 75, 75);
@@ -71,6 +70,7 @@ body{
 }
 .menuitems-content{
 display: flex;
+top:3.1vh;
 z-index: 30;
 padding-top: 2px;
 color:white;
@@ -137,7 +137,7 @@ border: 1px solid rgba(172, 171, 171, 0.518);
 }
 .tooloptionsflex{
   display: flex;
-  margin-left: 2vw;
+  margin-left: 40px;
   color:white;
   font-size: 1.7vh;
   gap:4px;
@@ -148,7 +148,9 @@ border: 1px solid rgba(172, 171, 171, 0.518);
 .tooloptionicons{
   cursor: pointer;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
-  height: 3.5vh;
+  height: 20px;
+  width: 20px;
+  padding: 2.5px;
   margin-top: 0.25vh;
   margin-left: 0.2vw;
   border-radius: 3px;
@@ -164,7 +166,7 @@ border: 1px solid rgba(172, 171, 171, 0.518);
 }
 .closebtn{
   cursor: pointer;
-  margin-right: 7px;
+  margin-right: 5px;
   font-weight: 500;
   color:rgb(182, 181, 181);
 }
@@ -255,7 +257,6 @@ input:focus{
 }
 .projecttitle{
   display: flex;
-  text-overflow: clip;
   gap:2px;
   background-color: #131314e9;
   width:100%;
@@ -264,20 +265,12 @@ input:focus{
 .documenttitle{
   display: flex;
   font-size: 13px;
-  justify-content: space-between;
   width: 10vw;
   align-items: center;
-  margin-top: 3px;
-  margin-bottom: 3px;
-  cursor: pointer;
-  margin-left: 3px;
+  margin: 3px 0 3px 3px;
   border-radius: 4px;
   color: rgb(217, 216, 216);
   background-color: rgb(51, 49, 49);
-}
-.documenttitle:hover{
-  background-color: rgb(78, 75, 75);
-  color: white;
 }
 .titleborder{
   border: 2px solid  rgba(172, 171, 171, 0.518);
@@ -317,26 +310,65 @@ input:focus{
 .activetool{
   background-color: rgb(53, 53, 53);
 }
-.activelayer{
+.tab{
+  display: flex;
+  gap:2px;
+  background-color: #1f1f1f;
+  width:100%;
+  height:25px;
+  box-shadow: 0 0 5px black inset;
+}
+.historybox{
+  display: flex;
+  margin-top: 2px;
+  height: 36.1vh;
+  flex-direction: column;
+  overflow:scroll;
+  scrollbar-width: thin;
+}
+.history{
+  display: flex;
+  align-items: center;
+  color:white;
+  border-bottom: 2px solid rgb(60, 60, 60);
+  align-self:center;
+  cursor: pointer;
+  height:3.5vh;
+  width: 100%;
+}
+.historyname{
+  width:95%;
+  padding:1vh;
+  font-size: 14px;
+  overflow: hidden;
+  text-wrap: nowrap;
+  height: 3vh;
+  margin-left:0.2vw
+}
+.historyeye{
+  margin-left:0.7vw;
+  height:1vw;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(122deg) brightness(103%) contrast(102%);
+}
+.activehistory{
   background-color: rgb(114, 114, 114);
 }
 .layertab{
   display: flex;
-  font-size: 13px;
-  justify-content: space-between;
-  width: 5vw;
+  font-size: 14px;
+  width: 57px;
   overflow: hidden;
   border-top-right-radius: 4px;
   align-items: center;
-  margin-right: 3px;
   margin-top:5px;
   color: rgb(217, 216, 216);
 }
 .layerbox{
   display: flex;
-  height: 41.8vh;
+  height: 42.1vh;
   flex-direction: column;
   overflow:scroll;
+  scrollbar-width: thin;
 }
 .layeroptions{
   position: absolute;
@@ -372,6 +404,9 @@ input:focus{
   cursor: pointer;
   height:5vh;
   width: 100%;
+}
+.activelayer{
+  background-color: rgb(114, 114, 114);
 }
 .layereye{
   margin-top:0.4vw;
@@ -419,6 +454,7 @@ input:focus{
 .transformgridbox{
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
@@ -426,12 +462,36 @@ input:focus{
   position: absolute;
   border:2px solid blue;
   background-color: white;
-  align-self: center;
   width:6px;
   height:6px;
 }
 .transformleftright:hover{
   cursor:e-resize;
+}
+.transformrightdown{
+  position: absolute;
+  right:-5px;
+  bottom: -5px;
+  border:2px solid blue;
+  background-color: white;
+  width:6px;
+  height:6px;
+}
+.transformrightdown:hover{
+  cursor:se-resize;
+}
+.transformrotate{
+  position: absolute;
+  right:-5px;
+  top: -5px;
+  border-radius: 10px;
+  border:2px solid blue;
+  background-color: white;
+  width:6px;
+  height:6px;
+}
+.transformrotate:hover{
+  cursor:grab;
 }
 .transformtopbottom{
   position: absolute;
@@ -442,4 +502,29 @@ input:focus{
 }
 .transformtopbottom:hover{
   cursor:n-resize;
+}
+.imageborder{
+display: none;
+position: absolute;
+background-color: red;
+z-index:31;
+}
+.shapetoolmenu{
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding:3px;
+  width: 124px;
+  height: 2vh;
+  background-color: rgb(33, 33, 33);
+  border:1px solid rgb(116, 116, 116);
+}
+.shapetoolmenu:hover{
+  border:1px solid blue;
+  background-color: rgb(50, 50, 50);
+  box-shadow: 1px 1px 5px rgb(26, 25, 25) inset;
+}
+#shapetoolmenulist{
+  position: absolute;
+  z-index: 31;
 }
